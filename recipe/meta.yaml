@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/veerer-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/veerer-{{ version }}.tar.gz
   sha256: e64b6559a8409d0c9616f1ca5e9e290e9223fdfcec13653b13502988d2461be9
 
 build:
@@ -27,6 +27,7 @@ requirements:
     - python
     - cython
     - pip
+    - setuptools
   run:
     - python
     - sagelib
