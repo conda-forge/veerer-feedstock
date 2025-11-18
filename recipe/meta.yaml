@@ -15,6 +15,8 @@ build:
   # SageMath is not available on Windows. We could build veerer but it cannot
   # even be imported then without sagelib.
   skip: True  # [win]
+  # SageMath does not support Python 3.13 yet.
+  skip: True  # [py == 313]
 
 requirements:
   build:
