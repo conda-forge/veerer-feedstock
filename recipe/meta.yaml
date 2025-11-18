@@ -6,24 +6,30 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/veerer-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/veerer-{{ version }}.tar.gz
   sha256: e64b6559a8409d0c9616f1ca5e9e290e9223fdfcec13653b13502988d2461be9
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  number: 2
   # SageMath is not available on Windows. We could build veerer but it cannot
   # even be imported then without sagelib.
   skip: True  # [win]
+  # SageMath does not support Python 3.13 yet.
+  skip: True  # [py == 313]
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - cython                                 # [build_platform != target_platform and sagelib in ('10.2', '10.3', '10.4', '10.5', '10.6', '10.7')]
   host:
     - python
     - cython
     - pip
+    - setuptools
   run:
     - python
     - sagelib
